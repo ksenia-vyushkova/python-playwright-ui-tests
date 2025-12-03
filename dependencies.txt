@@ -1,5 +1,6 @@
 pytest
 playwright
+pytest-playwright
 pytest-rerunfailures
 pytest-html
 allure-pytest
