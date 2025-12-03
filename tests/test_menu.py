@@ -2,6 +2,13 @@ import re
 from playwright.sync_api import Page, expect
 from pages.MenuPage import MenuPage
 
+def test_url(base_url, new_menu_page: Page):
+    """ Check url of the menu page"""
+    expect(new_menu_page).to_have_url(base_url)
+
+def test_failing_test(new_menu_page: Page):
+    """ Intentionally fail the test"""
+    expect(new_menu_page).to_have_url("https://invalid_url.com")
 
 def test_adding_first_item_to_cart(new_menu_page: Page):
     """ Check that the first cup can be added to the cart by a simple click"""
