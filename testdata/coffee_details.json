@@ -1,0 +1,134 @@
+[
+  {
+    "name": "Espresso",
+    "name_chinese": "特浓咖啡",
+    "price": 10,
+    "composition": [
+      {
+        "espresso": 30
+      }
+    ]
+  },
+  {
+    "name": "Espresso Macchiato",
+    "name_chinese": "浓缩玛奇朵",
+    "price": 12,
+    "composition": [
+      {
+        "espresso": 30
+      },
+      {
+        "milk foam": 15
+      }
+    ]
+  },
+  {
+    "name": "Cappuccino",
+    "name_chinese": "卡布奇诺",
+    "price": 19,
+    "composition": [
+      {
+        "espresso": 30
+      },
+      {
+        "steamed milk": 20
+      },
+      {
+        "milk foam": 50
+      }
+    ]
+  },
+  {
+    "name": "Mocha",
+    "name_chinese": "摩卡",
+    "price": 8,
+    "composition": [
+      {
+        "espresso": 30
+      },
+      {
+        "chocolate syrup": 20
+      },
+      {
+        "steamed milk": 25
+      },
+      {
+        "whipped cream": 25
+      }
+    ]
+  },
+  {
+    "name": "Flat White",
+    "name_chinese": "平白咖啡",
+    "price": 18,
+    "composition": [
+      {
+        "espresso": 30
+      },
+      {
+        "steamed milk": 50
+      }
+    ]
+  },
+  {
+    "name": "Americano",
+    "name_chinese": "美式咖啡",
+    "price": 7,
+    "composition": [
+      {
+        "espresso": 30
+      },
+      {
+        "water": 70
+      }
+    ]
+  },
+  {
+    "name": "Cafe Latte",
+    "name_chinese": "拿铁",
+    "price": 16,
+    "composition": [
+      {
+        "espresso": 30
+      },
+      {
+        "steamed milk": 50
+      },
+      {
+        "milk foam": 20
+      }
+    ]
+  },
+  {
+    "name": "Espresso Con Panna",
+    "name_chinese": "浓缩康宝蓝",
+    "price": 14,
+    "composition": [
+      {
+        "espresso": 30
+      },
+      {
+        "whipped cream": 15
+      }
+    ]
+  },
+  {
+    "name": "Cafe Breve",
+    "name_chinese": "半拿铁",
+    "price": 15,
+    "composition": [
+      {
+        "espresso": 25
+      },
+      {
+        "steamed milk": 30
+      },
+      {
+        "steamed cream": 30
+      },
+      {
+        "milk foam": 15
+      }
+    ]
+  }
+]
