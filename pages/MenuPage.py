@@ -27,3 +27,6 @@ class MenuPage:
 
     def get_coffee_item_header(self, coffee_name):
         return self.get_coffee_item_by_name(coffee_name).locator("h4")
+
+    def get_coffee_item_ingredients(self, coffee_name):
+        return self.get_coffee_item_by_name(coffee_name).locator("[style*='height']")

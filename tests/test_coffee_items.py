@@ -16,7 +16,7 @@ def test_no_duplicates_in_coffee_names(new_menu_page: Page):
 
 @pytest.mark.regression
 @pytest.mark.dependency(depends=["test_no_duplicates_in_cups_names"])
-def test_coffee_names_and_prices(new_menu_page: Page):
+def test_coffee_details(new_menu_page: Page):
     """
     Check coffee details for each item on the menu page,
     assuming that there are no duplicate coffee names on the menu page.
@@ -31,3 +31,15 @@ def test_coffee_names_and_prices(new_menu_page: Page):
         # Check that coffee name and price are correct.
         expect(coffee_item_header).to_have_text(
             f"{expected_coffee_details["name"]} ${expected_coffee_details['price']:.2f}")
+
+        # Check that ingredients count is correct.
+        ingredients = menu_page.get_coffee_item_ingredients(coffee_name)
+        expect(ingredients).to_have_count(len(expected_coffee_details["composition"]))
+
+        # Check each ingredient's name and height.
+        for i, expected_ingredient in enumerate(expected_coffee_details["composition"]):
+            expected_ingredient_name, expected_ingredient_height = list(expected_ingredient.items())[0]
+            ingredient = ingredients.nth(i)
+            expect(ingredient).to_be_visible()
+            expect(ingredient).to_have_text(expected_ingredient_name)
+            expect(ingredient).to_have_attribute("style", f"height: {expected_ingredient_height}%;")
