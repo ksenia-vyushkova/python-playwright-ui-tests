@@ -7,12 +7,10 @@ def pytest_addoption(parser):
                   help="Base url of the application",
                   default="https://coffee-cart.app/")
 
+
 def base_url(config):
-    cmd_base_url_option = config.getoption("--base-url")
-    if cmd_base_url_option is (None or ""):
-        return config.getini("--base-url")
-    else:
-        return cmd_base_url_option
+    return config.getoption("--base-url") or config.getini("--base-url")
+
 
 @pytest.fixture
 def new_menu_page(request, page: Page):
