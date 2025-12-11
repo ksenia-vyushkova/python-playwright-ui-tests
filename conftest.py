@@ -15,4 +15,4 @@ def base_url(config):
 @pytest.fixture
 def new_menu_page(request, page: Page):
     page.goto(base_url(request.config))
-    return page
+    yield page
