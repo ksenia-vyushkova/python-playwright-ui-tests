@@ -3,9 +3,10 @@
     "name": "Espresso",
     "name_chinese": "特浓咖啡",
     "price": 10,
-    "composition": [
+    "recipe": [
       {
-        "espresso": 30
+        "name": "espresso",
+        "quantity": 30
       }
     ]
   },
@@ -13,12 +14,14 @@
     "name": "Espresso Macchiato",
     "name_chinese": "浓缩玛奇朵",
     "price": 12,
-    "composition": [
+    "recipe": [
       {
-        "espresso": 30
+        "name": "espresso",
+        "quantity": 30
       },
       {
-        "milk foam": 15
+        "name": "milk foam",
+        "quantity": 15
       }
     ]
   },
@@ -26,15 +29,18 @@
     "name": "Cappuccino",
     "name_chinese": "卡布奇诺",
     "price": 19,
-    "composition": [
+    "recipe": [
       {
-        "espresso": 30
+        "name": "espresso",
+        "quantity": 30
       },
       {
-        "steamed milk": 20
+        "name": "steamed milk",
+        "quantity": 20
       },
       {
-        "milk foam": 50
+        "name": "milk foam",
+        "quantity": 50
       }
     ]
   },
@@ -42,18 +48,22 @@
     "name": "Mocha",
     "name_chinese": "摩卡",
     "price": 8,
-    "composition": [
+    "recipe": [
       {
-        "espresso": 30
+        "name": "espresso",
+        "quantity": 30
       },
       {
-        "chocolate syrup": 20
+        "name": "chocolate syrup",
+        "quantity": 20
       },
       {
-        "steamed milk": 25
+        "name": "steamed milk",
+        "quantity": 25
       },
       {
-        "whipped cream": 25
+        "name": "whipped cream",
+        "quantity": 25
       }
     ]
   },
@@ -61,12 +71,14 @@
     "name": "Flat White",
     "name_chinese": "平白咖啡",
     "price": 18,
-    "composition": [
+    "recipe": [
       {
-        "espresso": 30
+        "name": "espresso",
+        "quantity": 30
       },
       {
-        "steamed milk": 50
+        "name": "steamed milk",
+        "quantity": 50
       }
     ]
   },
@@ -74,12 +86,14 @@
     "name": "Americano",
     "name_chinese": "美式咖啡",
     "price": 7,
-    "composition": [
+    "recipe": [
       {
-        "espresso": 30
+        "name": "espresso",
+        "quantity": 30
       },
       {
-        "water": 70
+        "name": "water",
+        "quantity": 70
       }
     ]
   },
@@ -87,15 +101,18 @@
     "name": "Cafe Latte",
     "name_chinese": "拿铁",
     "price": 16,
-    "composition": [
+    "recipe": [
       {
-        "espresso": 30
+        "name": "espresso",
+        "quantity": 30
       },
       {
-        "steamed milk": 50
+        "name": "steamed milk",
+        "quantity": 50
       },
       {
-        "milk foam": 20
+        "name": "milk foam",
+        "quantity": 20
       }
     ]
   },
@@ -103,12 +120,14 @@
     "name": "Espresso Con Panna",
     "name_chinese": "浓缩康宝蓝",
     "price": 14,
-    "composition": [
+    "recipe": [
       {
-        "espresso": 30
+        "name": "espresso",
+        "quantity": 30
       },
       {
-        "whipped cream": 15
+        "name": "whipped cream",
+        "quantity": 15
       }
     ]
   },
@@ -116,18 +135,45 @@
     "name": "Cafe Breve",
     "name_chinese": "半拿铁",
     "price": 15,
-    "composition": [
+    "recipe": [
       {
-        "espresso": 25
+        "name": "espresso",
+        "quantity": 25
       },
       {
-        "steamed milk": 30
+        "name": "steamed milk",
+        "quantity": 30
       },
       {
-        "steamed cream": 30
+        "name": "steamed cream",
+        "quantity": 30
       },
       {
-        "milk foam": 15
+        "name": "milk foam",
+        "quantity": 15
+      }
+    ]
+  },
+  {
+    "name": "(Discounted) Mocha",
+    "price": 4,
+    "discounted": true,
+    "recipe": [
+      {
+        "name": "espresso",
+        "quantity": 30
+      },
+      {
+        "name": "chocolate syrup",
+        "quantity": 20
+      },
+      {
+        "name": "steamed milk",
+        "quantity": 25
+      },
+      {
+        "name": "whipped cream",
+        "quantity": 25
       }
     ]
   }

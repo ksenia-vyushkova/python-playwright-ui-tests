@@ -34,12 +34,13 @@ def test_coffee_details(new_menu_page: Page):
 
         # Check that ingredients count is correct.
         ingredients = menu_page.get_coffee_item_ingredients(coffee_name)
-        expect(ingredients).to_have_count(len(expected_coffee_details["composition"]))
+        expect(ingredients).to_have_count(len(expected_coffee_details["recipe"]))
 
-        # Check each ingredient's name and height.
-        for i, expected_ingredient in enumerate(expected_coffee_details["composition"]):
-            expected_ingredient_name, expected_ingredient_height = list(expected_ingredient.items())[0]
+        # Check each ingredient's name and quantity.
+        for i, expected_ingredient in enumerate(expected_coffee_details["recipe"]):
+            expected_ingredient_name = expected_ingredient["name"]
+            expected_ingredient_quantity = expected_ingredient["quantity"]
             ingredient = ingredients.nth(i)
             expect(ingredient).to_be_visible()
             expect(ingredient).to_have_text(expected_ingredient_name)
-            expect(ingredient).to_have_attribute("style", f"height: {expected_ingredient_height}%;")
+            expect(ingredient).to_have_attribute("style", f"height: {expected_ingredient_quantity}%;")
