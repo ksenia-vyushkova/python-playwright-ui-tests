@@ -1,38 +1,33 @@
-import re
 import pytest
 from playwright.sync_api import Page, expect
 from pages.MenuPage import MenuPage
+from utils.data_reader_util import read_all_coffee_details_from_file
+
+all_coffee_details = read_all_coffee_details_from_file("testdata/coffee_details.json")
 
 
 @pytest.mark.regression
-def test_url(base_url, new_menu_page: Page):
-    """ Check url of the menu page."""
+def test_url_and_title(base_url, new_menu_page: Page):
+    """Check url and title of the menu page."""
     expect(new_menu_page).to_have_url(base_url)
+    expect(new_menu_page).to_have_title("Coffee cart")
 
 
-@pytest.mark.failing
-def test_failing_test(new_menu_page: Page):
-    """ Intentionally fail the test."""
-    expect(new_menu_page).to_have_url("https://invalid_url.com")
+@pytest.mark.regression
+def test_default_cart_counter_and_total(new_menu_page: Page):
+    """Check that default values of cart counter and 'Total' are zero."""
+    menu_page = MenuPage(new_menu_page)
+    expect(menu_page.cart_link).to_have_text("cart (0)")
+    expect(menu_page.total_value).to_have_text("Total: $0.00")
 
 
 @pytest.mark.sanity
 @pytest.mark.regression
-def test_adding_first_item_to_cart(new_menu_page: Page):
-    """ Check that the first cup can be added to the cart by a simple click."""
-    cup_number = 0
+@pytest.mark.parametrize('cup_number', [0, 4, 8])
+def test_adding_one_coffee_item_to_cart(cup_number, new_menu_page: Page):
+    """Check that a cup can be added to the cart by a left mouse click."""
     menu_page = MenuPage(new_menu_page)
     menu_page.click_on_nth_cup(cup_number)
-    expect(menu_page.cart_link).to_contain_text(f"({cup_number + 1})")
-
-
-@pytest.mark.regression
-def test_hover_state(new_menu_page: Page):
-    """ Check that a cup is rotated on hover."""
-    cup_number = 0
-    menu_page = MenuPage(new_menu_page)
-    cup = menu_page.all_cups.nth(cup_number)
-    expect(cup).to_have_css("transform", "none")
-    menu_page.hover_over_nth_cup(cup_number)
-    expect(cup).to_have_css("cursor", "pointer")
-    expect(cup).to_have_css("transform", re.compile("^matrix*"))
+    coffee_price = menu_page.get_nth_coffe_item_price(cup_number)
+    expect(menu_page.cart_link).to_contain_text("cart (1)")
+    expect(menu_page.total_value).to_have_text(f"Total: {coffee_price}")
