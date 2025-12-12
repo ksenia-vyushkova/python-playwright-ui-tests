@@ -27,10 +27,22 @@ def test_default_cart_counter_and_total(new_menu_page: Page):
 @pytest.mark.sanity
 @pytest.mark.regression
 @pytest.mark.parametrize('cup_number', [0, (coffee_item_count - 1) // 2, coffee_item_count - 1])
-def test_adding_one_coffee_item_to_cart(cup_number, new_menu_page: Page):
+def test_adding_one_coffee_to_cart(cup_number, new_menu_page: Page):
     """Check that a cup can be added to the cart by a left mouse click."""
     menu_page = MenuPage(new_menu_page)
-    menu_page.click_on_nth_cup(cup_number)
     coffee_price = menu_page.get_nth_coffe_item_price(cup_number)
+    menu_page.click_on_nth_cup(cup_number)
+    expect(menu_page.cart_link).to_contain_text("cart (1)")
+    expect(menu_page.total_value).to_have_text(f"Total: {coffee_price}")
+
+
+@pytest.mark.regression
+def test_adding_one_coffee_to_cart_with_right_click(new_menu_page: Page):
+    """Check that a cup can be added to the cart by a right mouse click."""
+    cup_number = 6
+    menu_page = MenuPage(new_menu_page)
+    coffee_price = menu_page.get_nth_coffe_item_price(cup_number)
+    menu_page.right_click_on_nth_cup(cup_number)
+    menu_page.agree_to_add_to_cart()
     expect(menu_page.cart_link).to_contain_text("cart (1)")
     expect(menu_page.total_value).to_have_text(f"Total: {coffee_price}")
