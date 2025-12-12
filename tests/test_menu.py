@@ -33,7 +33,7 @@ def test_adding_one_coffee_to_cart(cup_number, new_menu_page: Page):
     coffee_price = menu_page.get_nth_coffe_item_price(cup_number)
     menu_page.click_on_nth_cup(cup_number)
     expect(menu_page.cart_link).to_contain_text("cart (1)")
-    expect(menu_page.total_value).to_have_text(f"Total: {coffee_price}")
+    expect(menu_page.total_value).to_have_text(f"Total: ${coffee_price:.2f}")
 
 
 @pytest.mark.regression
@@ -48,7 +48,7 @@ def test_adding_one_coffee_to_cart_with_right_click(new_menu_page: Page):
     menu_page.agree_to_add_to_cart()
     expect(menu_page.add_coffee_to_cart_question).not_to_be_visible()
     expect(menu_page.cart_link).to_contain_text("cart (1)")
-    expect(menu_page.total_value).to_have_text(f"Total: {coffee_price}")
+    expect(menu_page.total_value).to_have_text(f"Total: ${coffee_price:.2f}")
 
 
 @pytest.mark.regression
@@ -63,3 +63,18 @@ def test_refusing_to_add_coffee_to_cart(new_menu_page: Page):
     expect(menu_page.add_coffee_to_cart_question).not_to_be_visible()
     expect(menu_page.cart_link).to_contain_text("cart (0)")
     expect(menu_page.total_value).to_have_text("Total: $0.00")
+
+
+@pytest.mark.sanity
+@pytest.mark.regression
+def test_adding_two_coffees_to_cart(new_menu_page: Page):
+    """Check that two cups can be added to the cart and the total price is correct."""
+    first_cup = 3
+    second_cup = 7
+    menu_page = MenuPage(new_menu_page)
+    first_coffee_price = menu_page.get_nth_coffe_item_price(first_cup)
+    second_coffee_price = menu_page.get_nth_coffe_item_price(second_cup)
+    menu_page.click_on_nth_cup(first_cup)
+    menu_page.click_on_nth_cup(second_cup)
+    expect(menu_page.cart_link).to_contain_text("cart (2)")
+    expect(menu_page.total_value).to_have_text(f"Total: ${first_coffee_price + second_coffee_price:.2f}")

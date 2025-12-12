@@ -38,7 +38,7 @@ class MenuPage:
         return self.all_coffee_items.nth(cup_number).inner_text().split("\n")[0]
 
     def get_nth_coffe_item_price(self, cup_number):
-        return self.all_coffee_items.nth(cup_number).inner_text().split("\n")[1]
+        return float(self.all_coffee_items.nth(cup_number).inner_text().split("\n")[1].split("$")[1])
 
     def get_coffee_item_by_name(self, coffee_name):
         return [coffee_item for coffee_item in self.all_coffee_items.all() if
