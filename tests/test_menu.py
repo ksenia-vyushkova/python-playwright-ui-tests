@@ -4,6 +4,9 @@ from pages.MenuPage import MenuPage
 from utils.data_reader_util import read_all_coffee_details_from_file
 
 all_coffee_details = read_all_coffee_details_from_file("testdata/coffee_details.json")
+coffee_item_count = len([coffee_item for
+                         coffee_item in all_coffee_details
+                         if not "(Discounted)" in coffee_item["name"]])
 
 
 @pytest.mark.regression
@@ -23,7 +26,7 @@ def test_default_cart_counter_and_total(new_menu_page: Page):
 
 @pytest.mark.sanity
 @pytest.mark.regression
-@pytest.mark.parametrize('cup_number', [0, 4, 8])
+@pytest.mark.parametrize('cup_number', [0, (coffee_item_count - 1) // 2, coffee_item_count - 1])
 def test_adding_one_coffee_item_to_cart(cup_number, new_menu_page: Page):
     """Check that a cup can be added to the cart by a left mouse click."""
     menu_page = MenuPage(new_menu_page)
