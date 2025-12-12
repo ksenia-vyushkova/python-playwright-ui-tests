@@ -41,8 +41,25 @@ def test_adding_one_coffee_to_cart_with_right_click(new_menu_page: Page):
     """Check that a cup can be added to the cart by a right mouse click."""
     cup_number = 6
     menu_page = MenuPage(new_menu_page)
+    coffee_name = menu_page.get_nth_coffe_item_name(cup_number)
     coffee_price = menu_page.get_nth_coffe_item_price(cup_number)
     menu_page.right_click_on_nth_cup(cup_number)
+    expect(menu_page.add_coffee_to_cart_question).to_have_text(f"Add {coffee_name} to the cart?")
     menu_page.agree_to_add_to_cart()
+    expect(menu_page.add_coffee_to_cart_question).not_to_be_visible()
     expect(menu_page.cart_link).to_contain_text("cart (1)")
     expect(menu_page.total_value).to_have_text(f"Total: {coffee_price}")
+
+
+@pytest.mark.regression
+def test_refusing_to_add_coffee_to_cart(new_menu_page: Page):
+    """Check that a cup is not added to the cart when refusing the "add to cart" question."""
+    cup_number = 4
+    menu_page = MenuPage(new_menu_page)
+    coffee_name = menu_page.get_nth_coffe_item_name(cup_number)
+    menu_page.right_click_on_nth_cup(cup_number)
+    expect(menu_page.add_coffee_to_cart_question).to_have_text(f"Add {coffee_name} to the cart?")
+    menu_page.refuse_to_add_to_cart()
+    expect(menu_page.add_coffee_to_cart_question).not_to_be_visible()
+    expect(menu_page.cart_link).to_contain_text("cart (0)")
+    expect(menu_page.total_value).to_have_text("Total: $0.00")

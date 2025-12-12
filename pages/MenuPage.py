@@ -11,7 +11,9 @@ class MenuPage:
         self.all_coffee_items = self.page.locator("//*[contains(@class, 'cup')]/ancestor::li")
         self.coffee_items_headers = self.all_coffee_items.locator("h4")
         self.total_value = self.page.locator(".pay")
-        self.yes_add_to_cart = self.page.locator('button:has-text("Yes")')
+        self.add_coffee_to_cart_question = self.page.locator("dialog p")
+        self.yes_to_add_to_cart = self.page.locator('button:has-text("Yes")')
+        self.no_to_add_to_cart = self.page.locator('button:has-text("No")')
 
     def get_all_coffee_names(self):
         coffee_and_prices = self.coffee_items_headers.all_inner_texts()
@@ -24,10 +26,16 @@ class MenuPage:
         self.all_cups.nth(cup_number).click(button="right")
 
     def agree_to_add_to_cart(self):
-        self.yes_add_to_cart.click()
+        self.yes_to_add_to_cart.click()
+
+    def refuse_to_add_to_cart(self):
+        self.no_to_add_to_cart.click()
 
     def hover_over_nth_cup(self, cup_number):
         self.all_cups.nth(cup_number).hover()
+
+    def get_nth_coffe_item_name(self, cup_number):
+        return self.all_coffee_items.nth(cup_number).inner_text().split("\n")[0]
 
     def get_nth_coffe_item_price(self, cup_number):
         return self.all_coffee_items.nth(cup_number).inner_text().split("\n")[1]
