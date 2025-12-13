@@ -34,18 +34,21 @@ class MenuPage:
     def hover_over_nth_cup(self, cup_number):
         self.all_cups.nth(cup_number).hover()
 
-    def get_nth_coffe_item_name(self, cup_number):
-        return self.all_coffee_items.nth(cup_number).inner_text().split("\n")[0]
+    def get_nth_coffee_item_name(self, cup_number):
+        return self.coffee_items_headers.nth(cup_number).inner_text().split("\n")[0]
 
-    def get_nth_coffe_item_price(self, cup_number):
-        return float(self.all_coffee_items.nth(cup_number).inner_text().split("\n")[1].split("$")[1])
+    def get_nth_coffee_item_price(self, cup_number):
+        return float(self.coffee_items_headers.nth(cup_number).inner_text().split("\n")[1].split("$")[1])
 
     def get_coffee_item_by_name(self, coffee_name):
         return [coffee_item for coffee_item in self.all_coffee_items.all() if
                 coffee_item.locator("h4").inner_text().split("\n")[0] == coffee_name][0]
 
-    def get_coffee_item_header(self, coffee_name):
+    def get_coffee_item_header_by_name(self, coffee_name):
         return self.get_coffee_item_by_name(coffee_name).locator("h4")
+
+    def double_click_coffee_header_by_name(self, coffee_name):
+        self.get_coffee_item_header_by_name(coffee_name).dblclick()
 
     def get_coffee_item_ingredients(self, coffee_name):
         return self.get_coffee_item_by_name(coffee_name).locator("[style*='height']")
