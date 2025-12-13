@@ -7,6 +7,21 @@ from utils.data_reader_util import read_all_coffee_details_from_file, get_coffee
 all_coffee_details = read_all_coffee_details_from_file("testdata/coffee_details.json")
 
 
+@pytest.mark.regression
+def test_url_and_title(base_url, new_menu_page: Page):
+    """Check url and title of the menu page."""
+    expect(new_menu_page).to_have_url(base_url)
+    expect(new_menu_page).to_have_title("Coffee cart")
+
+
+@pytest.mark.regression
+def test_default_cart_counter_and_total(new_menu_page: Page):
+    """Check that default values of cart counter and 'Total' are zero."""
+    menu_page = MenuPage(new_menu_page)
+    expect(menu_page.cart_link).to_have_text("cart (0)")
+    expect(menu_page.total_value).to_have_text("Total: $0.00")
+
+
 @pytest.mark.sanity
 @pytest.mark.regression
 def test_no_duplicates_in_coffee_names(new_menu_page: Page):

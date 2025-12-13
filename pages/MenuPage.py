@@ -11,6 +11,8 @@ class MenuPage:
         self.all_coffee_items = self.page.locator("//*[contains(@class, 'cup')]/ancestor::li")
         self.coffee_items_headers = self.all_coffee_items.locator("h4")
         self.total_value = self.page.locator(".pay")
+        self.pay_container = self.page.locator(".pay-container")
+        self.cart_preview = self.page.locator(".cart-preview")
         self.add_coffee_to_cart_question = self.page.locator("dialog p")
         self.yes_to_add_to_cart = self.page.locator('button:has-text("Yes")')
         self.no_to_add_to_cart = self.page.locator('button:has-text("No")')
@@ -52,3 +54,9 @@ class MenuPage:
 
     def get_coffee_item_ingredients(self, coffee_name):
         return self.get_coffee_item_by_name(coffee_name).locator("[style*='height']")
+
+    def add_from_cart_preview_by_name(self, coffee_name):
+        self.cart_preview.locator(f"//span[text()='{coffee_name}']/ancestor::li//button[text()='+']").click()
+
+    def remove_from_cart_preview_by_name(self, coffee_name):
+        self.cart_preview.locator(f"//span[text()='{coffee_name}']/ancestor::li//button[text()='-']").click()

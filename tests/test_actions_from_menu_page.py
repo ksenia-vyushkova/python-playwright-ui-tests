@@ -9,21 +9,6 @@ coffee_item_count = len([coffee_item for
                          if not "(Discounted)" in coffee_item["name"]])
 
 
-@pytest.mark.regression
-def test_url_and_title(base_url, new_menu_page: Page):
-    """Check url and title of the menu page."""
-    expect(new_menu_page).to_have_url(base_url)
-    expect(new_menu_page).to_have_title("Coffee cart")
-
-
-@pytest.mark.regression
-def test_default_cart_counter_and_total(new_menu_page: Page):
-    """Check that default values of cart counter and 'Total' are zero."""
-    menu_page = MenuPage(new_menu_page)
-    expect(menu_page.cart_link).to_have_text("cart (0)")
-    expect(menu_page.total_value).to_have_text("Total: $0.00")
-
-
 @pytest.mark.sanity
 @pytest.mark.regression
 @pytest.mark.parametrize('cup_number', [0, (coffee_item_count - 1) // 2, coffee_item_count - 1])
@@ -78,3 +63,48 @@ def test_adding_two_coffees_to_cart(new_menu_page: Page):
     menu_page.click_on_nth_cup(second_cup)
     expect(menu_page.cart_link).to_contain_text("cart (2)")
     expect(menu_page.total_value).to_have_text(f"Total: ${first_coffee_price + second_coffee_price:.2f}")
+
+
+@pytest.mark.regression
+def test_adding_coffee_from_cart_preview(new_menu_page: Page):
+    """Check that coffee can be correctly added to the cart from cart preview."""
+    cup_number = 4
+    menu_page = MenuPage(new_menu_page)
+    coffee_name = menu_page.get_nth_coffee_item_name(cup_number)
+    coffee_price = menu_page.get_nth_coffee_item_price(cup_number)
+
+    # First, add one coffee item to the cart.
+    menu_page.click_on_nth_cup(cup_number)
+    expect(menu_page.cart_link).to_contain_text("cart (1)")
+    expect(menu_page.total_value).to_have_text(f"Total: ${coffee_price:.2f}")
+    menu_page.pay_container.hover()
+    expect(menu_page.cart_preview).to_contain_text(f"{coffee_name} x 1")
+
+    # Then, add the same coffee item again from the cart preview.
+    menu_page.add_from_cart_preview_by_name(coffee_name)
+    expect(menu_page.cart_link).to_contain_text("cart (2)")
+    expect(menu_page.total_value).to_have_text(f"Total: ${(coffee_price * 2):.2f}")
+    expect(menu_page.cart_preview).to_contain_text(f"{coffee_name} x 2")
+    expect(menu_page.cart_preview).to_be_visible()
+
+
+@pytest.mark.regression
+def test_removing_coffee_from_cart_preview(new_menu_page: Page):
+    """Check that coffee can be correctly removed from the cart preview."""
+    cup_number = 4
+    menu_page = MenuPage(new_menu_page)
+    coffee_name = menu_page.get_nth_coffee_item_name(cup_number)
+    coffee_price = menu_page.get_nth_coffee_item_price(cup_number)
+
+    # First, add one coffee item to the cart.
+    menu_page.click_on_nth_cup(cup_number)
+    expect(menu_page.cart_link).to_contain_text("cart (1)")
+    expect(menu_page.total_value).to_have_text(f"Total: ${coffee_price:.2f}")
+    menu_page.pay_container.hover()
+    expect(menu_page.cart_preview).to_contain_text(f"{coffee_name} x 1")
+
+    # Then, remove this coffee item from the cart preview.
+    menu_page.remove_from_cart_preview_by_name(coffee_name)
+    expect(menu_page.cart_link).to_contain_text("cart (0)")
+    expect(menu_page.total_value).to_have_text("Total: $0.00")
+    expect(menu_page.cart_preview).not_to_be_visible()
