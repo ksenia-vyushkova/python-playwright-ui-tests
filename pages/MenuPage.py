@@ -43,8 +43,11 @@ class MenuPage:
         return float(self.coffee_items_headers.nth(cup_number).inner_text().split("\n")[1].split("$")[1])
 
     def get_coffee_item_by_name(self, coffee_name):
-        return [coffee_item for coffee_item in self.all_coffee_items.all() if
-                coffee_item.locator("h4").inner_text().split("\n")[0] == coffee_name][0]
+        return [
+            coffee_item for coffee_item
+            in self.all_coffee_items.all()
+            if coffee_item.locator("h4").inner_text().split("\n")[0] == coffee_name
+        ][0]
 
     def get_coffee_item_header_by_name(self, coffee_name):
         return self.get_coffee_item_by_name(coffee_name).locator("h4")
@@ -60,3 +63,9 @@ class MenuPage:
 
     def remove_from_cart_preview_by_name(self, coffee_name):
         self.cart_preview.locator(f"//span[text()='{coffee_name}']/ancestor::li//button[text()='-']").click()
+
+    def get_coffee_names_in_cart_preview(self):
+        return [
+            item.inner_text().split(" x ")[0]
+            for item in self.cart_preview.locator("li").all()
+        ]

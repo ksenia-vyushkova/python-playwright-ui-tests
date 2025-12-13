@@ -28,9 +28,8 @@ def test_no_duplicates_in_coffee_names(new_menu_page: Page):
     """Checks that the coffee names are unique"""
     menu_page = MenuPage(new_menu_page)
     coffee_names = menu_page.get_all_coffee_names()
-
-    # Check that the list of coffee names does not contain duplicates.
-    assert len(coffee_names) == len(set(coffee_names))
+    assert len(coffee_names) == len(set(coffee_names)), \
+        "Duplicate coffee names found on the menu page."
 
 
 @pytest.mark.regression

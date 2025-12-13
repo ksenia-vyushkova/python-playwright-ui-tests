@@ -146,7 +146,7 @@ def test_adding_and_removing_coffee_from_cart_preview(new_menu_page: Page):
     expect(menu_page.cart_preview).to_contain_text(f"{second_coffee_name} x 1")
     expect(menu_page.cart_preview).to_contain_text(f"{third_coffee_name} x 1")
 
-    # Add one coffee item and remove another coffee item from the cart preview.
+    # Add some coffee items and remove another coffee item from the cart preview.
     menu_page.add_from_cart_preview_by_name(first_coffee_name)
     menu_page.add_from_cart_preview_by_name(second_coffee_name)
     menu_page.add_from_cart_preview_by_name(second_coffee_name)
@@ -158,3 +158,16 @@ def test_adding_and_removing_coffee_from_cart_preview(new_menu_page: Page):
     expect(menu_page.cart_preview).to_contain_text(f"{first_coffee_name} x 2")
     expect(menu_page.cart_preview).to_contain_text(f"{second_coffee_name} x 3")
     expect(menu_page.cart_preview).not_to_contain_text(f"{third_coffee_name} x")
+
+
+@pytest.mark.regression
+def test_order_in_cart_preview(new_menu_page: Page):
+    """Check that all coffee items in the cart preview are in alphabetic order."""
+    menu_page = MenuPage(new_menu_page)
+    for i in range(coffee_item_count):
+        menu_page.click_on_nth_cup(i)
+    menu_page.pay_container.hover()
+    coffee_names_in_cart_preview = menu_page.get_coffee_names_in_cart_preview()
+    expected_coffee_names_in_order = sorted(coffee_names_in_cart_preview)
+    assert coffee_names_in_cart_preview == expected_coffee_names_in_order, \
+        "Coffee items in cart preview are not in expected alphabetic order."
