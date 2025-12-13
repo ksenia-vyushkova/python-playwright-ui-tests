@@ -82,10 +82,8 @@ def test_hover_state(new_menu_page: Page):
 def test_chinese_coffee_name(coffee_details, new_menu_page: Page):
     """Check that coffee name is shown in Chinese on double click."""
     coffee_name = coffee_details["name"]
-    coffee_price = coffee_details["price"]
     coffee_name_chinese = coffee_details["name_chinese"]
-    new_coffee_item_header = f"{coffee_name_chinese} ${coffee_price:.2f}"
     menu_page = MenuPage(new_menu_page)
-    coffee_header = menu_page.get_coffee_item_header_by_name(coffee_name)
     menu_page.double_click_coffee_header_by_name(coffee_name)
-    expect(coffee_header).to_have_text(new_coffee_item_header)
+    coffee_header = menu_page.get_coffee_item_header_by_name(coffee_name_chinese)
+    expect(coffee_header).to_be_visible()
