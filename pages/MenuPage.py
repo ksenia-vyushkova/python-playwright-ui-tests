@@ -20,6 +20,13 @@ class MenuPage:
         self.promo_message = self.promo_pop_up.locator("span")
         self.yes_to_add_promo_to_cart = self.promo_pop_up.locator("button:has-text(\"Yes, of course!\")")
         self.no_to_add_promo_to_cart = self.promo_pop_up.locator("button:has-text(\"Nah, I'll skip.\")")
+        self.checkout_modal_window = self.page.locator(".modal")
+        self.checkout_name = self.checkout_modal_window.get_by_label("Name")
+        self.checkout_email = self.checkout_modal_window.get_by_label("Email")
+        self.checkout_promotion_agreement = self.checkout_modal_window.locator("#promotion")
+        self.submit_order_button = self.checkout_modal_window.locator("#submit-payment")
+        self.successful_checkout_message = self.page.locator(".snackbar")
+        self.close_checkout_dialog_button = self.page.locator(".close")
 
     def get_all_coffee_names(self):
         coffee_and_prices = self.coffee_items_headers.all_inner_texts()
@@ -77,7 +84,8 @@ class MenuPage:
         return self.promo_message.inner_text().split("It's your lucky day! Get an extra cup of ")[1].split(" for $")[0]
 
     def get_promo_pop_up_coffee_price(self):
-        return int(self.promo_message.inner_text().split("It's your lucky day! Get an extra cup of ")[1].split(" for $")[1].rstrip("."))
+        return int(self.promo_message.inner_text().split(
+            "It's your lucky day! Get an extra cup of ")[1].split(" for $")[1].rstrip("."))
 
     def add_coffee_from_promo_pop_up(self):
         self.yes_to_add_promo_to_cart.click()
