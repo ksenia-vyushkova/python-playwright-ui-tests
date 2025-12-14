@@ -2,7 +2,7 @@ import re
 import pytest
 from playwright.sync_api import Page, expect
 from pages.MenuPage import MenuPage
-from utils.data_reader_util import read_all_coffee_details_from_file, get_coffee_item_details_by_name
+from utils.data_reader_util import read_all_coffee_details_from_file
 
 all_coffee_details = read_all_coffee_details_from_file("testdata/coffee_details.json")
 

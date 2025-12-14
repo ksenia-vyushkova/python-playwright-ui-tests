@@ -16,6 +16,10 @@ class MenuPage:
         self.add_coffee_to_cart_question = self.page.locator("dialog p")
         self.yes_to_add_to_cart = self.page.locator('button:has-text("Yes")')
         self.no_to_add_to_cart = self.page.locator('button:has-text("No")')
+        self.promo_pop_up = self.page.locator(".promo")
+        self.promo_message = self.promo_pop_up.locator("span")
+        self.yes_to_add_promo_to_cart = self.promo_pop_up.locator("button:has-text(\"Yes, of course!\")")
+        self.no_to_add_promo_to_cart = self.promo_pop_up.locator("button:has-text(\"Nah, I'll skip.\")")
 
     def get_all_coffee_names(self):
         coffee_and_prices = self.coffee_items_headers.all_inner_texts()
@@ -54,6 +58,9 @@ class MenuPage:
     def get_coffee_item_ingredients(self, coffee_name):
         return self.get_coffee_item_by_name(coffee_name).locator("[style*='height']")
 
+    def get_discounted_coffee_item_ingredients(self):
+        return self.promo_pop_up.locator("[style*='height']")
+
     def add_from_cart_preview_by_name(self, coffee_name):
         self.cart_preview.locator(f"//span[text()='{coffee_name}']/ancestor::li//button[text()='+']").click()
 
@@ -65,3 +72,15 @@ class MenuPage:
             item.inner_text().split(" x ")[0]
             for item in self.cart_preview.locator("li").all()
         ]
+
+    def get_promo_pop_up_coffee_name(self):
+        return self.promo_message.inner_text().split("It's your lucky day! Get an extra cup of ")[1].split(" for $")[0]
+
+    def get_promo_pop_up_coffee_price(self):
+        return int(self.promo_message.inner_text().split("It's your lucky day! Get an extra cup of ")[1].split(" for $")[1].rstrip("."))
+
+    def add_coffee_from_promo_pop_up(self):
+        self.yes_to_add_promo_to_cart.click()
+
+    def refuse_coffee_from_promo_pop_up(self):
+        self.no_to_add_promo_to_cart.click()
