@@ -1,6 +1,12 @@
 from playwright.sync_api import Page, expect
 from pages.CartPage import CartPage
 from pages.MenuPage import MenuPage
+from utils.data_reader_util import read_all_coffee_details_from_file
+
+all_coffee_details = read_all_coffee_details_from_file("testdata/coffee_details.json")
+coffee_item_count = len([coffee_item for
+                         coffee_item in all_coffee_details
+                         if not "(Discounted)" in coffee_item["name"]])
 
 
 def test_one_item_in_cart(new_menu_page: Page):
@@ -123,3 +129,23 @@ def test_deleting_last_coffee_from_cart(new_menu_page: Page):
 
     expect(cart_page.cart_list).to_be_visible()
     expect(cart_page.cart_list).to_have_text("No coffee, go add some.")
+
+
+def test_order_in_cart(new_menu_page: Page):
+    """ Check that coffee items in cart are in expected alphabetic order."""
+    menu_page = MenuPage(new_menu_page)
+    cart_page = CartPage(new_menu_page)
+
+    # Add all items to the cart, including the promo item.
+    for i in range(3):
+        menu_page.click_on_nth_cup(i)
+    menu_page.add_coffee_from_promo_pop_up()
+    for j in range(3, coffee_item_count):
+        menu_page.click_on_nth_cup(j)
+
+    # Check the order of items in the cart.
+    menu_page.cart_link.click()
+    coffee_names_in_cart = cart_page.get_coffee_names_in_cart()
+    expected_coffee_names_in_order = sorted(coffee_names_in_cart)
+    assert coffee_names_in_cart == expected_coffee_names_in_order, \
+        "Coffee items in cart are not in expected alphabetic order."

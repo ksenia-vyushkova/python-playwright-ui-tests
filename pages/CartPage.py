@@ -23,3 +23,10 @@ class CartPage:
 
     def get_row_text(self, coffee_name, coffee_price, coffee_quantity):
         return f"{coffee_name}${coffee_price:.2f} x {coffee_quantity}+-${coffee_price * coffee_quantity:.2f}x"
+
+    def get_coffee_names_in_cart(self):
+        return [
+            item.inner_text()
+            for item in self.page.locator(
+                "//*[@class ='list']/div/ul/li[@class = 'list-item']/div[1]").all()
+        ]
