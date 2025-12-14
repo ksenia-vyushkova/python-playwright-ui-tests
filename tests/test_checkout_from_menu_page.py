@@ -30,7 +30,8 @@ def test_checkout_happy_path(new_menu_page: Page):
     expect(menu_page.successful_checkout_message).to_be_visible()
     expect(menu_page.successful_checkout_message).to_have_text(
         "Thanks for your purchase. Please check your email for payment.")
-
+    expect(menu_page.cart_link).to_have_text("cart (0)")
+    expect(menu_page.total_value).to_have_text("Total: $0.00")
 
 @pytest.mark.regression
 def test_checkout_dialog_can_be_closed(new_menu_page: Page):
