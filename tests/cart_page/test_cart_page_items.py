@@ -65,6 +65,42 @@ def test_two_same_coffee_items_in_cart(new_menu_page: Page):
         cart_page.get_row_text(coffee_name, coffee_price, 2))
 
 
+def test_promo_item_in_cart(new_menu_page: Page):
+    """ Check that cart shows the discounted coffee item from the promo pop up."""
+    cup_number_1, cup_number_2 = 0, 8
+    menu_page = MenuPage(new_menu_page)
+    cart_page = CartPage(new_menu_page)
+    coffee_name_1 = menu_page.get_nth_coffee_item_name(cup_number_1)
+    coffee_name_2 = menu_page.get_nth_coffee_item_name(cup_number_2)
+    coffee_price_1 = menu_page.get_nth_coffee_item_price(cup_number_1)
+    coffee_price_2 = menu_page.get_nth_coffee_item_price(cup_number_2)
+
+    # Add two different coffee items to the cart, with the second one added twice to trigger the promo.
+    menu_page.click_on_nth_cup(cup_number_1)
+    menu_page.click_on_nth_cup(cup_number_2)
+    menu_page.click_on_nth_cup(cup_number_2)
+
+    # Add the discounted coffee item from the promo pop up.
+    discounted_coffee_name = menu_page.get_promo_pop_up_coffee_name()
+    discounted_coffee_price = menu_page.get_promo_pop_up_coffee_price()
+    menu_page.add_coffee_from_promo_pop_up()
+
+    # Verify that the correct coffee items are in the cart.
+    menu_page.cart_link.click()
+
+    total_value = coffee_price_1 + 2 * coffee_price_2 + discounted_coffee_price
+
+    expect(cart_page.cart_link).to_contain_text("cart (4)")
+    expect(cart_page.total_value).to_have_text(f"Total: ${total_value:.2f}")
+    (expect(cart_page.get_list_entry_for_coffee(f"(Discounted) {discounted_coffee_name}")).to_have_text(
+        cart_page.get_row_text(f"(Discounted) {discounted_coffee_name}",
+                               discounted_coffee_price, 1)))
+    expect(cart_page.get_list_entry_for_coffee(coffee_name_1)).to_have_text(
+        cart_page.get_row_text(coffee_name_1, coffee_price_1, 1))
+    expect(cart_page.get_list_entry_for_coffee(coffee_name_2)).to_have_text(
+        cart_page.get_row_text(coffee_name_2, coffee_price_2, 2))
+
+
 def test_empty_cart(new_menu_page: Page):
     """ Check that cart is empty when no items were added."""
     menu_page = MenuPage(new_menu_page)
