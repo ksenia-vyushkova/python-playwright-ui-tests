@@ -7,7 +7,7 @@ class MenuPage:
         self.page = page
 
         self.cart_link = self.page.locator('a[href="/cart"]')
-        self.all_cups = self.page.locator(".cup")
+        self.all_cups = self.page.locator("ul .cup")
         self.all_coffee_items = self.page.locator("//*[contains(@class, 'cup')]/ancestor::li")
         self.coffee_items_headers = self.all_coffee_items.locator("h4")
         self.total_value = self.page.locator(".pay")
