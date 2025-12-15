@@ -8,6 +8,7 @@ class CartPage:
 
         self.cart_link = self.page.locator('a[href="/cart"]')
         self.cart_list = self.page.locator(".list")
+        self.cart_items = self.page.locator("//*[@class = 'list']/div/ul/li[@class != 'list-header']")
         self.total_value = self.page.locator(".pay")
         self.list_header_1 = self.page.locator(".list-header *:nth-child(1)")
         self.list_header_2 = self.page.locator(".list-header *:nth-child(2)")
