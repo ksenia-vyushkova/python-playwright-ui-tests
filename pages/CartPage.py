@@ -8,7 +8,7 @@ class CartPage:
 
         self.cart_link = self.page.locator('a[href="/cart"]')
         self.cart_list = self.page.locator(".list")
-        self.cart_items = self.page.locator("//*[@class = 'list']/div/ul/li[@class != 'list-header']")
+        self.cart_rows = self.page.locator("//*[@class = 'list']/div/ul/li[@class != 'list-header']")
         self.total_value = self.page.locator(".pay")
         self.list_header_1 = self.page.locator(".list-header *:nth-child(1)")
         self.list_header_2 = self.page.locator(".list-header *:nth-child(2)")
@@ -25,7 +25,7 @@ class CartPage:
         self.page.locator(
             f"//*[@class ='list']/div/ul/li[descendant::*[text() = '{coffee_name}']]//button[@class = 'delete']").click()
 
-    def get_list_entry_for_coffee(self, coffee_name):
+    def get_list_row_for_coffee(self, coffee_name):
         return self.page.locator(
             f"//*[@class ='list']/div/ul/li[descendant::*[text() = '{coffee_name}']]")
 
@@ -38,3 +38,11 @@ class CartPage:
             for item in self.page.locator(
                 "//*[@class ='list']/div/ul/li[@class = 'list-item']/div[1]").all()
         ]
+
+    def increase_coffee_count_by_name(self, coffee_name):
+        self.page.locator(
+            f"//*[@class ='list']/div/ul/li[descendant::*[text() = '{coffee_name}']]//button[text() = '+']").click()
+
+    def decrease_coffee_count_by_name(self, coffee_name):
+        self.page.locator(
+            f"//*[@class ='list']/div/ul/li[descendant::*[text() = '{coffee_name}']]//button[text() = '-']").click()

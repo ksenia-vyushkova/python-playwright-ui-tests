@@ -27,8 +27,8 @@ def test_one_item_in_cart(new_menu_page: Page):
     expect(cart_page.list_header_2).to_have_text("Unit")
     expect(cart_page.list_header_3).to_have_text("Total")
     expect(cart_page.list_header_3).to_have_text("Total")
-    expect(cart_page.cart_items).to_have_count(1)
-    expect(cart_page.get_list_entry_for_coffee(coffee_name)).to_have_text(
+    expect(cart_page.cart_rows).to_have_count(1)
+    expect(cart_page.get_list_row_for_coffee(coffee_name)).to_have_text(
         cart_page.get_row_text(coffee_name, coffee_price, 1))
 
 
@@ -48,10 +48,10 @@ def test_two_items_in_cart(new_menu_page: Page):
 
     expect(cart_page.cart_link).to_contain_text("cart (2)")
     expect(cart_page.total_value).to_have_text(f"Total: ${coffee_price_1 + coffee_price_2:.2f}")
-    expect(cart_page.cart_items).to_have_count(2)
-    expect(cart_page.get_list_entry_for_coffee(coffee_name_1)).to_have_text(
+    expect(cart_page.cart_rows).to_have_count(2)
+    expect(cart_page.get_list_row_for_coffee(coffee_name_1)).to_have_text(
         cart_page.get_row_text(coffee_name_1, coffee_price_1, 1))
-    expect(cart_page.get_list_entry_for_coffee(coffee_name_2)).to_have_text(
+    expect(cart_page.get_list_row_for_coffee(coffee_name_2)).to_have_text(
         cart_page.get_row_text(coffee_name_2, coffee_price_2, 1))
 
 
@@ -69,8 +69,8 @@ def test_two_same_coffee_items_in_cart(new_menu_page: Page):
 
     expect(cart_page.cart_link).to_contain_text("cart (2)")
     expect(cart_page.total_value).to_have_text(f"Total: ${coffee_price * 2:.2f}")
-    expect(cart_page.cart_items).to_have_count(1)
-    expect(cart_page.get_list_entry_for_coffee(coffee_name)).to_have_text(
+    expect(cart_page.cart_rows).to_have_count(1)
+    expect(cart_page.get_list_row_for_coffee(coffee_name)).to_have_text(
         cart_page.get_row_text(coffee_name, coffee_price, 2))
 
 
@@ -101,13 +101,13 @@ def test_promo_item_in_cart(new_menu_page: Page):
 
     expect(cart_page.cart_link).to_contain_text("cart (4)")
     expect(cart_page.total_value).to_have_text(f"Total: ${total_value:.2f}")
-    expect(cart_page.cart_items).to_have_count(3)
-    (expect(cart_page.get_list_entry_for_coffee(f"(Discounted) {discounted_coffee_name}")).to_have_text(
+    expect(cart_page.cart_rows).to_have_count(3)
+    (expect(cart_page.get_list_row_for_coffee(f"(Discounted) {discounted_coffee_name}")).to_have_text(
         cart_page.get_row_text(f"(Discounted) {discounted_coffee_name}",
                                discounted_coffee_price, 1)))
-    expect(cart_page.get_list_entry_for_coffee(coffee_name_1)).to_have_text(
+    expect(cart_page.get_list_row_for_coffee(coffee_name_1)).to_have_text(
         cart_page.get_row_text(coffee_name_1, coffee_price_1, 1))
-    expect(cart_page.get_list_entry_for_coffee(coffee_name_2)).to_have_text(
+    expect(cart_page.get_list_row_for_coffee(coffee_name_2)).to_have_text(
         cart_page.get_row_text(coffee_name_2, coffee_price_2, 2))
 
 
