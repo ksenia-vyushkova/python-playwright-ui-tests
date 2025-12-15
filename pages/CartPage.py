@@ -13,6 +13,13 @@ class CartPage:
         self.list_header_1 = self.page.locator(".list-header *:nth-child(1)")
         self.list_header_2 = self.page.locator(".list-header *:nth-child(2)")
         self.list_header_3 = self.page.locator(".list-header *:nth-child(3)")
+        self.checkout_modal_window = self.page.locator(".modal")
+        self.checkout_name = self.checkout_modal_window.get_by_label("Name")
+        self.checkout_email = self.checkout_modal_window.get_by_label("Email")
+        self.checkout_promotion_agreement = self.checkout_modal_window.locator("#promotion")
+        self.submit_order_button = self.checkout_modal_window.locator("#submit-payment")
+        self.successful_checkout_message = self.page.locator(".snackbar")
+        self.close_checkout_dialog_button = self.page.locator(".close")
 
     def delete_coffee_from_cart_by_name(self, coffee_name):
         self.page.locator(
