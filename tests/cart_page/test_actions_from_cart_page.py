@@ -39,7 +39,7 @@ def test_decreasing_coffee_items_in_cart(new_menu_page: Page):
 
     expect(cart_page.cart_rows).to_have_count(1)
     expect(cart_page.get_list_row_for_coffee(coffee_name)).to_have_text(
-        cart_page.get_row_text(coffee_name, coffee_price, 2))
+        cart_page.get_row_text(coffee_name, coffee_price, 1))
 
 
 @pytest.mark.regression
