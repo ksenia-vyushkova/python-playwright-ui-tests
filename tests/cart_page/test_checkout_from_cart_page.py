@@ -14,6 +14,7 @@ invalid_user_input = [
 ]
 
 
+@pytest.mark.sanity
 @pytest.mark.regression
 def test_cart_checkout_happy_path(new_menu_page: Page):
     """ Check happy path for checkout from the cart page."""

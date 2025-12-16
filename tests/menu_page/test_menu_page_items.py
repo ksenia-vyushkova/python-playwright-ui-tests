@@ -32,6 +32,7 @@ def test_no_duplicates_in_coffee_names(new_menu_page: Page):
         "Duplicate coffee names found on the menu page."
 
 
+@pytest.mark.sanity
 @pytest.mark.regression
 @pytest.mark.dependency(depends=["test_no_duplicates_in_cups_names"])
 @pytest.mark.parametrize('expected_coffee_details', [coffee_details for coffee_details

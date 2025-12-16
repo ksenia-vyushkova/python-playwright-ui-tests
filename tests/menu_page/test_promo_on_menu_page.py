@@ -7,6 +7,7 @@ from utils.data_reader_util import read_all_coffee_details_from_file, get_coffee
 all_coffee_details = read_all_coffee_details_from_file("testdata/coffee_details.json")
 
 
+@pytest.mark.sanity
 @pytest.mark.regression
 def test_promo_for_three_different_coffee_items(new_menu_page: Page):
     """ Check adding a discounted coffee from the promo pop up, when 3 different coffee items had been selected."""

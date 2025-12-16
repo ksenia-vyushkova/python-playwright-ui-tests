@@ -24,6 +24,7 @@ def test_adding_one_coffee_to_cart(cup_number, new_menu_page: Page):
     expect(menu_page.cart_preview).to_contain_text(f"{coffee_name} x 1")
 
 
+@pytest.mark.sanity
 @pytest.mark.regression
 def test_adding_one_coffee_to_cart_with_right_click(new_menu_page: Page):
     """Check that a cup can be added to the cart by a right mouse click."""
@@ -122,6 +123,7 @@ def test_removing_coffee_from_cart_preview(new_menu_page: Page):
     expect(menu_page.cart_preview).not_to_be_visible()
 
 
+@pytest.mark.sanity
 @pytest.mark.regression
 def test_adding_and_removing_coffee_from_cart_preview(new_menu_page: Page):
     """Combine checks for adding and removing coffee from cart preview."""

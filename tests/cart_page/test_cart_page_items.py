@@ -1,3 +1,4 @@
+import pytest
 from playwright.sync_api import Page, expect
 from pages.CartPage import CartPage
 from pages.MenuPage import MenuPage
@@ -9,6 +10,7 @@ coffee_item_count = len([coffee_item for
                          if not "(Discounted)" in coffee_item["name"]])
 
 
+@pytest.mark.regression
 def test_one_item_in_cart(new_menu_page: Page):
     """ Check that cart shows one item when one coffee is added."""
     cup_number = 6
@@ -32,6 +34,7 @@ def test_one_item_in_cart(new_menu_page: Page):
         cart_page.get_row_text(coffee_name, coffee_price, 1))
 
 
+@pytest.mark.regression
 def test_two_items_in_cart(new_menu_page: Page):
     """ Check that cart shows two items when two coffee items are added."""
     cup_number_1, cup_number_2 = 7, 4
@@ -55,6 +58,7 @@ def test_two_items_in_cart(new_menu_page: Page):
         cart_page.get_row_text(coffee_name_2, coffee_price_2, 1))
 
 
+@pytest.mark.regression
 def test_two_same_coffee_items_in_cart(new_menu_page: Page):
     """ Check that cart shows one row for a coffee item that was added twice."""
     cup_number = 2
@@ -74,6 +78,8 @@ def test_two_same_coffee_items_in_cart(new_menu_page: Page):
         cart_page.get_row_text(coffee_name, coffee_price, 2))
 
 
+@pytest.mark.sanity
+@pytest.mark.regression
 def test_promo_item_in_cart(new_menu_page: Page):
     """ Check that cart shows the discounted coffee item from the promo pop up."""
     cup_number_1, cup_number_2 = 0, 8
@@ -111,6 +117,7 @@ def test_promo_item_in_cart(new_menu_page: Page):
         cart_page.get_row_text(coffee_name_2, coffee_price_2, 2))
 
 
+@pytest.mark.regression
 def test_empty_cart(new_menu_page: Page):
     """ Check that cart is empty when no items were added."""
     menu_page = MenuPage(new_menu_page)
@@ -120,6 +127,7 @@ def test_empty_cart(new_menu_page: Page):
     expect(cart_page.cart_list).to_have_text("No coffee, go add some.")
 
 
+@pytest.mark.regression
 def test_deleting_last_coffee_from_cart(new_menu_page: Page):
     """ Check that cart is empty when the last coffee item is deleted."""
     cup_number = 2
@@ -135,7 +143,8 @@ def test_deleting_last_coffee_from_cart(new_menu_page: Page):
     expect(cart_page.cart_list).to_have_text("No coffee, go add some.")
 
 
-def test_order_in_cart(new_menu_page: Page):
+@pytest.mark.regression
+def test_rows_order_in_cart(new_menu_page: Page):
     """ Check that coffee items in cart are in expected alphabetic order."""
     menu_page = MenuPage(new_menu_page)
     cart_page = CartPage(new_menu_page)

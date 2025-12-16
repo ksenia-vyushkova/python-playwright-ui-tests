@@ -75,6 +75,7 @@ def test_removing_one_coffee_row_in_cart(new_menu_page: Page):
     expect(cart_page.cart_list).to_have_text("No coffee, go add some.")
 
 
+@pytest.mark.sanity
 @pytest.mark.regression
 def test_combination_of_actions_on_cart_page(new_menu_page: Page):
     """ Check deleting coffee item row in cart page."""
